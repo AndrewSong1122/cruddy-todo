@@ -8,14 +8,6 @@ var items = {};
 // Public API - Fix these CRUD functions ///////////////////////////////////////
 
 exports.create = (text, callback) => {
-  // var id = counter.getNextUniqueId((err, data) => {
-  //   if (err) {
-  //     console.log('Error creating file');
-  //   } else {
-  //     return data;
-  //   }
-  // });
-
   counter.getNextUniqueId((err, data) => {
     if (err) {
       console.log('Error creating file');
@@ -23,7 +15,13 @@ exports.create = (text, callback) => {
       var id = data;
       var fileName = id + '.txt';
       var filePath = path.join(exports.dataDir, fileName);
-      fs.writeFile(filePath, text);
+      fs.writeFile(filePath, text, (err) => {
+        if (err) {
+          console.log('something');
+        } else {
+          callback(null, {id: id, text: text});
+        }
+      }); //missing arugment is the callback
     }
   });
 
