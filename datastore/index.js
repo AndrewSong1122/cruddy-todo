@@ -21,20 +21,29 @@ exports.create = (text, callback) => {
         } else {
           callback(null, {id: id, text: text});
         }
-      }); //missing arugment is the callback
+      });
     }
   });
-
-
-  //items[id] = text;
-  //callback(null, { id, text });
 };
 
 exports.readAll = (callback) => {
-  var data = _.map(items, (text, id) => {
-    return { id, text };
+  // var data = _.map(items, (text, id) => {
+  //   return { id, text };
+  // });
+  // callback(null, data);
+
+
+  fs.readdir(exports.dataDir, (err, files)=> {
+    if (err) {
+      console.log('you are poop!');
+    } else {
+      var result = [];
+      files.map((file) => {
+        result.push({id: file.slice(0, 5), text: file.slice(0, 5)});
+      });
+      callback(null, result);
+    }
   });
-  callback(null, data);
 };
 
 exports.readOne = (id, callback) => {
