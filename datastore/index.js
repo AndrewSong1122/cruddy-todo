@@ -43,14 +43,8 @@ exports.readAll = (callback) => {
     if (err) {
       callback(new Error('Error reading todos'));
     } else {
-      // var result = [];
-      // files.map((file) => {
-      //   result.push({id: file.slice(0, 5), text: file.slice(0, 5)});
-      // });
-      // callback(null, result);
       var ro = Promise.promisify(exports.readOne);
       var data = _.map(files, (file) => {
-        // var filePath = exports.dataDir + file.slice(0, 5) + '.txt';
         return ro(file.slice(0, 5));
       });
       Promise.all(data)
